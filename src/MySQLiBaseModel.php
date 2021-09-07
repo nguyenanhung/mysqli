@@ -80,8 +80,8 @@ class MySQLiBaseModel
      */
     public function __construct()
     {
-        if (class_exists('\nguyenanhung\MyDebug\Debug')) {
-            $this->debug = new \nguyenanhung\MyDebug\Debug();
+        if (class_exists('\nguyenanhung\MyDebug\Logger')) {
+            $this->debug = new \nguyenanhung\MyDebug\Logger();
             if ($this->debugStatus === TRUE) {
                 $this->debug->setDebugStatus($this->debugStatus);
                 if ($this->debugLevel) {
