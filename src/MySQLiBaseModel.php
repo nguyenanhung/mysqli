@@ -23,34 +23,34 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '2.0.1';
-    const LAST_MODIFIED = '2021-09-15';
-    const AUTHOR_NAME   = 'Hung Nguyen';
-    const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
-    const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
+    public const VERSION       = '2.0.2';
+    public const LAST_MODIFIED = '2021-09-20';
+    public const AUTHOR_NAME   = 'Hung Nguyen';
+    public const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
+    public const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
 
-    const OPERATOR_EQUAL_TO                 = '=';
-    const OP_EQ                             = '=';
-    const OPERATOR_NOT_EQUAL_TO             = '!=';
-    const OP_NE                             = '!=';
-    const OPERATOR_LESS_THAN                = '<';
-    const OP_LT                             = '<';
-    const OPERATOR_LESS_THAN_OR_EQUAL_TO    = '<=';
-    const OP_LTE                            = '<=';
-    const OPERATOR_GREATER_THAN             = '>';
-    const OP_GT                             = '>';
-    const OPERATOR_GREATER_THAN_OR_EQUAL_TO = '>=';
-    const OP_GTE                            = '>=';
-    const OPERATOR_IS_SPACESHIP             = '<=>';
-    const OPERATOR_IS_IN                    = 'IN';
-    const OPERATOR_IS_LIKE                  = 'LIKE';
-    const OPERATOR_IS_LIKE_BINARY           = 'LIKE BINARY';
-    const OPERATOR_IS_ILIKE                 = 'ilike';
-    const OPERATOR_IS_NOT_LIKE              = 'NOT LIKE';
-    const OPERATOR_IS_NULL                  = 'IS NULL';
-    const OPERATOR_IS_NOT_NULL              = 'IS NOT NULL';
-    const ORDER_ASCENDING                   = 'ASC';
-    const ORDER_DESCENDING                  = 'DESC';
+    public const OPERATOR_EQUAL_TO                 = '=';
+    public const OP_EQ                             = '=';
+    public const OPERATOR_NOT_EQUAL_TO             = '!=';
+    public const OP_NE                             = '!=';
+    public const OPERATOR_LESS_THAN                = '<';
+    public const OP_LT                             = '<';
+    public const OPERATOR_LESS_THAN_OR_EQUAL_TO    = '<=';
+    public const OP_LTE                            = '<=';
+    public const OPERATOR_GREATER_THAN             = '>';
+    public const OP_GT                             = '>';
+    public const OPERATOR_GREATER_THAN_OR_EQUAL_TO = '>=';
+    public const OP_GTE                            = '>=';
+    public const OPERATOR_IS_SPACESHIP             = '<=>';
+    public const OPERATOR_IS_IN                    = 'IN';
+    public const OPERATOR_IS_LIKE                  = 'LIKE';
+    public const OPERATOR_IS_LIKE_BINARY           = 'LIKE BINARY';
+    public const OPERATOR_IS_ILIKE                 = 'ilike';
+    public const OPERATOR_IS_NOT_LIKE              = 'NOT LIKE';
+    public const OPERATOR_IS_NULL                  = 'IS NULL';
+    public const OPERATOR_IS_NOT_NULL              = 'IS NOT NULL';
+    public const ORDER_ASCENDING                   = 'ASC';
+    public const ORDER_DESCENDING                  = 'DESC';
 
 
     /** @var object Đối tượng khởi tạo dùng gọi đến Class Debug \nguyenanhung\MyDebug\Logger */
@@ -66,11 +66,11 @@ class MySQLiBaseModel
     /** @var bool Cấu hình trạng thái Debug, TRUE nếu bật, FALSE nếu tắt */
     public $debugStatus = false;
     /** @var null|string Cấu hình Level Debug */
-    public $debugLevel = null;
+    public $debugLevel = 'error';
     /** @var null|bool|string Cấu hình thư mục lưu trữ Log, VD: /your/to/path */
-    public $debugLoggerPath = null;
+    public $debugLoggerPath = '';
     /** @var null|string Cấu hình File Log, VD: Log-2018-10-15.log | Log-date('Y-m-d').log */
-    public $debugLoggerFilename = null;
+    public $debugLoggerFilename = '';
     /** @var string Primary Key Default */
     public $primaryKey = 'id';
 
@@ -138,7 +138,7 @@ class MySQLiBaseModel
      */
     public function preparePaging(int $pageIndex = 1, int $pageSize = 10): array
     {
-        if ($pageIndex != 0) {
+        if ($pageIndex !== 0) {
             if (!$pageIndex || $pageIndex <= 0 || empty($pageIndex)) {
                 $pageIndex = 1;
             }
@@ -205,7 +205,7 @@ class MySQLiBaseModel
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2018-12-02 20:53
      */
-    public function getDatabase()
+    public function getDatabase(): ?array
     {
         return $this->database;
     }
@@ -245,7 +245,7 @@ class MySQLiBaseModel
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2018-12-01 21:54
      */
-    public function getTable()
+    public function getTable(): ?string
     {
         return $this->table;
     }
@@ -272,11 +272,11 @@ class MySQLiBaseModel
      *
      * @param string $name
      *
-     * @return void|null
-     * @author: 713uk13m <dev@nguyenanhung.com>
-     * @time  : 2018-12-02 21:01
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 59:34
      */
-    public function disconnect(string $name = '')
+    public function disconnect(string $name = ''): void
     {
         if (empty($name)) {
             $name = $this->dbName;
@@ -285,7 +285,7 @@ class MySQLiBaseModel
             $this->db->disconnect($name);
             unset($this->db);
         } catch (Exception $e) {
-            return $this->errorException($e, null);
+            $this->errorException($e, null);
         }
     }
 
@@ -296,7 +296,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 29:15
      */
-    public function disconnectAll()
+    public function disconnectAll(): void
     {
         try {
             $this->db->disconnectAll();
@@ -330,7 +330,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 33:24
      */
-    public function countAll(string $column = '*')
+    public function countAll(string $column = '*'): ?int
     {
         try {
             $results = $this->db->get($this->table, null, $column);
@@ -353,7 +353,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 33:50
      */
-    public function checkExists($whereValue = '', string $whereField = 'id', string $select = '*')
+    public function checkExists($whereValue = '', string $whereField = 'id', string $select = '*'): ?int
     {
         try {
             $this->queryWhereFieldValue($whereValue, $whereField);
@@ -377,7 +377,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:04
      */
-    public function checkExistsWithMultipleWhere($whereValue = '', string $whereField = 'id', string $select = '*')
+    public function checkExistsWithMultipleWhere($whereValue = '', string $whereField = 'id', string $select = '*'): ?int
     {
         try {
             $this->queryMultipleWhereField($whereValue, $whereField);
@@ -400,7 +400,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:21
      */
-    public function getLatest(string $selectField = '*', string $orderByColumn = 'id')
+    public function getLatest(string $selectField = '*', string $orderByColumn = 'id'): ?array
     {
         try {
             $this->db->orderBy($orderByColumn, self::ORDER_DESCENDING);
@@ -423,7 +423,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:30
      */
-    public function getOldest(string $selectField = '*', string $orderByColumn = 'id')
+    public function getOldest(string $selectField = '*', string $orderByColumn = 'id'): ?array
     {
         try {
             $this->db->orderBy($orderByColumn, self::ORDER_ASCENDING);
@@ -446,7 +446,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:56
      */
-    public function getInfo($value = '', string $field = 'id', string $selectField = '*')
+    public function getInfo($value = '', string $field = 'id', string $selectField = '*'): ?array
     {
         try {
             $this->queryWhereFieldValue($value, $field);
@@ -473,7 +473,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 35:18
      */
-    public function getInfoWithMultipleWhere($wheres = '', string $field = 'id', string $selectField = '*')
+    public function getInfoWithMultipleWhere($wheres = '', string $field = 'id', string $selectField = '*'): ?array
     {
         try {
             $this->queryMultipleWhereField($wheres, $field);
@@ -505,12 +505,9 @@ class MySQLiBaseModel
         try {
             $this->queryWhereFieldValue($value, $field);
             $result = $this->db->getOne($this->table, $fieldOutput);
+
             // $this->logger->debug(__FUNCTION__, 'GET Result => ' . json_encode($result));
-            if (isset($result->$fieldOutput)) {
-                return $result->$fieldOutput;
-            } else {
-                return null;
-            }
+            return $result->$fieldOutput ?? null;
         } catch (Exception $e) {
             return $this->errorException($e, null);
         }
@@ -533,12 +530,9 @@ class MySQLiBaseModel
         try {
             $this->queryMultipleWhereField($wheres, $field);
             $result = $this->db->getOne($this->table, $fieldOutput);
+
             // $this->logger->debug(__FUNCTION__, 'GET Result => ' . json_encode($result));
-            if (isset($result->$fieldOutput)) {
-                return $result->$fieldOutput;
-            } else {
-                return null;
-            }
+            return $result->$fieldOutput ?? null;
         } catch (Exception $e) {
             return $this->errorException($e, null);
         }
