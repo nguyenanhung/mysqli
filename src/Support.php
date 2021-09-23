@@ -48,7 +48,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 03:57
      */
-    protected function queryWhereFieldValue($value = '', string $field = 'id'): void
+    protected function queryWhereFieldValue($value = '', $field = 'id')
     {
         if (is_array($value) && count($value) > 0) {
             foreach ($value as $f => $v) {
@@ -72,7 +72,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 19:36
      */
-    protected function queryOnlyWhereFieldValue($wheres = ''): void
+    protected function queryOnlyWhereFieldValue($wheres = '')
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $column => $column_value) {
@@ -95,7 +95,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 05:43
      */
-    protected function queryMultipleWhereField($wheres = '', string $field = 'id'): void
+    protected function queryMultipleWhereField($wheres = '', $field = 'id')
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $value) {
@@ -119,7 +119,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 09:50
      */
-    protected function queryMultipleWhere($wheres = ''): void
+    protected function queryMultipleWhere($wheres = '')
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $field => $value) {
@@ -143,7 +143,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 17:41
      */
-    protected function queryOnlyMultipleWhere($wheres = ''): void
+    protected function queryOnlyMultipleWhere($wheres = '')
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $value) {
@@ -165,7 +165,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 10:49
      */
-    protected function queryOrderBy(array $options = null): void
+    protected function queryOrderBy(array $options = null)
     {
         if (is_array($options) && (isset($options['orderBy']) && is_array($options['orderBy']))) {
             foreach ($options['orderBy'] as $column => $direction) {
@@ -185,7 +185,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 15:31
      */
-    protected function queryGetResultWithLimit(array $options = null, string $selectField = '*')
+    protected function queryGetResultWithLimit($options = null, $selectField = '*')
     {
         if (isset($options['limit'], $options['offset']) && $options['limit'] > 0) {
             $page    = $this->preparePaging($options['offset'], $options['limit']);
