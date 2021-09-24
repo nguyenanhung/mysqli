@@ -1,12 +1,12 @@
-# GitHub Action for MySQLi Class by HungNG
-name: Testing MySQLi Class by HungNG
+# GitHub Action for PHP Package Database MySQLi by HungG
+name: Testing PHP Package Database MySQLi by HungG
 on: [ push, pull_request ]
 jobs:
     build:
         strategy:
             matrix:
                 operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
-                php-versions: [ '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0' ]
+                php-versions: [ '7.0', '7.1', '7.2', '7.3', '7.4', '8.0' ]
         runs-on: ${{ matrix.operating-system }}
         steps:
             -   name: Checkout

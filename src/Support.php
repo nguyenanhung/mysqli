@@ -48,7 +48,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 03:57
      */
-    protected function queryWhereFieldValue($value = '', $field = 'id')
+    protected function queryWhereFieldValue($value = '', string $field = 'id')
     {
         if (is_array($value) && count($value) > 0) {
             foreach ($value as $f => $v) {
@@ -95,7 +95,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 05:43
      */
-    protected function queryMultipleWhereField($wheres = '', $field = 'id')
+    protected function queryMultipleWhereField($wheres = '', string $field = 'id')
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $value) {
@@ -185,7 +185,7 @@ trait Support
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 15:31
      */
-    protected function queryGetResultWithLimit($options = null, $selectField = '*')
+    protected function queryGetResultWithLimit(array $options = null, string $selectField = '*')
     {
         if (isset($options['limit'], $options['offset']) && $options['limit'] > 0) {
             $page    = $this->preparePaging($options['offset'], $options['limit']);

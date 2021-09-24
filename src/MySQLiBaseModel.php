@@ -23,7 +23,7 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '2.0.4';
+    const VERSION       = '3.0.0';
     const LAST_MODIFIED = '2021-09-24';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
@@ -120,7 +120,7 @@ class MySQLiBaseModel
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return self::VERSION;
     }
@@ -136,7 +136,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/21/2021 23:24
      */
-    public function preparePaging($pageIndex = 1, $pageSize = 10)
+    public function preparePaging(int $pageIndex = 1, int $pageSize = 10): array
     {
         if ($pageIndex !== 0) {
             if (!$pageIndex || $pageIndex <= 0 || empty($pageIndex)) {
@@ -160,7 +160,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/28/2021 42:05
      */
-    public function setPrimaryKey($primaryKey)
+    public function setPrimaryKey(string $primaryKey): MySQLiBaseModel
     {
         $this->primaryKey = $primaryKey;
 
@@ -175,7 +175,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/28/2021 42:13
      */
-    public function getPrimaryKey()
+    public function getPrimaryKey(): string
     {
         return $this->primaryKey;
     }
@@ -190,7 +190,7 @@ class MySQLiBaseModel
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2018-12-02 20:53
      */
-    public function setDatabase($database = array(), $name = 'default')
+    public function setDatabase(array $database = array(), string $name = 'default'): MySQLiBaseModel
     {
         $this->database = $database;
         $this->dbName   = $name;
@@ -217,7 +217,7 @@ class MySQLiBaseModel
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2018-12-02 20:59
      */
-    public function getDbName()
+    public function getDbName(): string
     {
         return $this->dbName;
     }
@@ -231,7 +231,7 @@ class MySQLiBaseModel
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2018-12-01 21:54
      */
-    public function setTable($table = '')
+    public function setTable(string $table = ''): MySQLiBaseModel
     {
         $this->table = $table;
 
@@ -257,7 +257,7 @@ class MySQLiBaseModel
      * @author: 713uk13m <dev@nguyenanhung.com>
      * @time  : 2018-12-02 20:43
      */
-    public function connection()
+    public function connection(): MySQLiBaseModel
     {
         if (!is_object($this->db)) {
             $this->db = new MysqliDb();
@@ -276,7 +276,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/20/2021 59:34
      */
-    public function disconnect($name = '')
+    public function disconnect(string $name = '')
     {
         if (empty($name)) {
             $name = $this->dbName;
@@ -330,7 +330,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 33:24
      */
-    public function countAll($column = '*')
+    public function countAll(string $column = '*')
     {
         try {
             $results = $this->db->get($this->table, null, $column);
@@ -353,7 +353,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 33:50
      */
-    public function checkExists($whereValue = '', $whereField = 'id', $select = '*')
+    public function checkExists($whereValue = '', string $whereField = 'id', string $select = '*')
     {
         try {
             $this->queryWhereFieldValue($whereValue, $whereField);
@@ -377,7 +377,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:04
      */
-    public function checkExistsWithMultipleWhere($whereValue = '', $whereField = 'id', $select = '*')
+    public function checkExistsWithMultipleWhere($whereValue = '', string $whereField = 'id', string $select = '*')
     {
         try {
             $this->queryMultipleWhereField($whereValue, $whereField);
@@ -400,7 +400,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:21
      */
-    public function getLatest($selectField = '*', $orderByColumn = 'id')
+    public function getLatest(string $selectField = '*', string $orderByColumn = 'id')
     {
         try {
             $this->db->orderBy($orderByColumn, self::ORDER_DESCENDING);
@@ -423,7 +423,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:30
      */
-    public function getOldest($selectField = '*', $orderByColumn = 'id')
+    public function getOldest(string $selectField = '*', string $orderByColumn = 'id')
     {
         try {
             $this->db->orderBy($orderByColumn, self::ORDER_ASCENDING);
@@ -446,7 +446,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 34:56
      */
-    public function getInfo($value = '', $field = 'id', $selectField = '*')
+    public function getInfo($value = '', string $field = 'id', string $selectField = '*')
     {
         try {
             $this->queryWhereFieldValue($value, $field);
@@ -466,14 +466,14 @@ class MySQLiBaseModel
      *
      * @param string|array $wheres
      * @param string       $field
-     * @param null|string  $selectField
+     * @param string       $selectField
      *
      * @return array|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 35:18
      */
-    public function getInfoWithMultipleWhere($wheres = '', $field = 'id', $selectField = '*')
+    public function getInfoWithMultipleWhere($wheres = '', string $field = 'id', string $selectField = '*')
     {
         try {
             $this->queryMultipleWhereField($wheres, $field);
@@ -500,18 +500,14 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 35:39
      */
-    public function getValue($value = '', $field = 'id', $fieldOutput = '')
+    public function getValue($value = '', string $field = 'id', string $fieldOutput = '')
     {
         try {
             $this->queryWhereFieldValue($value, $field);
             $result = $this->db->getOne($this->table, $fieldOutput);
 
             // $this->logger->debug(__FUNCTION__, 'GET Result => ' . json_encode($result));
-            if (isset($result->$fieldOutput)) {
-                return $result->$fieldOutput;
-            }
-
-            return null;
+            return $result->$fieldOutput ?? null;
         } catch (Exception $e) {
             return $this->errorException($e, null);
         }
@@ -529,18 +525,14 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 36:20
      */
-    public function getValueWithMultipleWhere($wheres = '', $field = 'id', $fieldOutput = '')
+    public function getValueWithMultipleWhere($wheres = '', string $field = 'id', string $fieldOutput = '')
     {
         try {
             $this->queryMultipleWhereField($wheres, $field);
             $result = $this->db->getOne($this->table, $fieldOutput);
 
             // $this->logger->debug(__FUNCTION__, 'GET Result => ' . json_encode($result));
-            if (isset($result->$fieldOutput)) {
-                return $result->$fieldOutput;
-            }
-
-            return null;
+            return $result->$fieldOutput ?? null;
         } catch (Exception $e) {
             return $this->errorException($e, null);
         }
@@ -556,7 +548,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 36:54
      */
-    public function getDistinctResult($selectField = '*')
+    public function getDistinctResult(string $selectField = '*')
     {
         try {
             return $this->db->setQueryOption(['DISTINCT'])->get($this->table, null, $selectField);
@@ -575,7 +567,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 36:58
      */
-    public function getResultDistinct($selectField = '')
+    public function getResultDistinct(string $selectField = '')
     {
         return $this->getDistinctResult($selectField);
     }
@@ -585,14 +577,14 @@ class MySQLiBaseModel
      *
      * @param array|string $wheres
      * @param string       $selectField
-     * @param null|array   $options
+     * @param array|null   $options
      *
      * @return array|\MysqliDb|null
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 37:11
      */
-    public function getResult($wheres = array(), $selectField = '*', $options = null)
+    public function getResult($wheres = array(), string $selectField = '*', array $options = null)
     {
         try {
             $this->queryMultipleWhere($wheres);
@@ -618,7 +610,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 37:18
      */
-    public function getResultWithMultipleWhere($wheres = array(), $selectField = '*', $options = null)
+    public function getResultWithMultipleWhere(array $wheres = array(), string $selectField = '*', $options = null)
     {
         try {
             $this->queryOnlyMultipleWhere($wheres);
@@ -644,7 +636,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 37:51
      */
-    public function countResult($wheres = array(), $selectField = '*')
+    public function countResult(array $wheres = array(), string $selectField = '*'): int
     {
         try {
             $this->queryMultipleWhere($wheres);
@@ -670,7 +662,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 09/16/2021 12:48
      */
-    public function add(array $data = array())
+    public function add(array $data = array()): int
     {
         try {
             $insertId = $this->db->insert($this->table, $data);
@@ -695,7 +687,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 38:31
      */
-    public function update($data = array(), $wheres = array())
+    public function update(array $data = array(), array $wheres = array()): int
     {
         try {
             $this->queryOnlyWhereFieldValue($wheres);
@@ -719,7 +711,7 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 38:47
      */
-    public function delete($wheres = array())
+    public function delete(array $wheres = array()): int
     {
         try {
             $this->queryOnlyWhereFieldValue($wheres);
