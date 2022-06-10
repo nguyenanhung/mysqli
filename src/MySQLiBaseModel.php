@@ -23,8 +23,8 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '3.0.0';
-    const LAST_MODIFIED = '2021-09-24';
+    const VERSION       = '3.0.1';
+    const LAST_MODIFIED = '2022-06-10';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
@@ -413,6 +413,31 @@ class MySQLiBaseModel
     }
 
     /**
+     * Function getLatestByColumn
+     *
+     * @param array        $wheres
+     * @param string|array $selectField
+     * @param string       $column
+     * @param string       $fields
+     *
+     * @return array|mixed|string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2022 18:31
+     */
+    public function getLatestByColumn(array $wheres = array(), $selectField = '*', string $column = 'id', string $fields = 'id')
+    {
+        try {
+            $this->queryMultipleWhereField($wheres, $fields);
+            $this->db->orderBy($column, self::ORDER_DESCENDING);
+
+            return $this->db->getOne($this->table, $selectField);
+        } catch (Exception $e) {
+            return $this->errorException($e, null);
+        }
+    }
+
+    /**
      * Function getOldest
      *
      * @param string $selectField
@@ -427,6 +452,31 @@ class MySQLiBaseModel
     {
         try {
             $this->db->orderBy($orderByColumn, self::ORDER_ASCENDING);
+
+            return $this->db->getOne($this->table, $selectField);
+        } catch (Exception $e) {
+            return $this->errorException($e, null);
+        }
+    }
+
+    /**
+     * Function getOldestByColumn
+     *
+     * @param array        $wheres
+     * @param string|array $selectField
+     * @param string       $column
+     * @param string       $fields
+     *
+     * @return array|mixed|string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 10/06/2022 19:36
+     */
+    public function getOldestByColumn(array $wheres = array(), $selectField = '*', string $column = 'id', string $fields = 'id')
+    {
+        try {
+            $this->queryMultipleWhereField($wheres, $fields);
+            $this->db->orderBy($column, self::ORDER_ASCENDING);
 
             return $this->db->getOne($this->table, $selectField);
         } catch (Exception $e) {
