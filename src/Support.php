@@ -59,7 +59,12 @@ trait Support
                 }
             }
         } else {
-            $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+            if (is_array($value)) {
+                $this->db->where($field, $value, self::OPERATOR_IS_IN);
+            } else {
+                $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+            }
+
         }
     }
 
@@ -161,9 +166,10 @@ trait Support
      *
      * @param array|null $options
      *
+     * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/16/2021 10:49
+     * @time     : 13/06/2022 46:07
      */
     protected function queryOrderBy(array $options = null)
     {
@@ -177,13 +183,14 @@ trait Support
     /**
      * Function queryGetResultWithLimit
      *
-     * @param array|null $options
-     * @param string     $selectField
+     * @param $options
+     * @param $selectField
      *
-     * @return mixed
+     * @return array|\MysqliDb|object|string
+     * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/16/2021 15:31
+     * @time     : 13/06/2022 46:13
      */
     protected function queryGetResultWithLimit($options = null, $selectField = '*')
     {

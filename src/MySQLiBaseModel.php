@@ -23,8 +23,8 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '2.0.5';
-    const LAST_MODIFIED = '2022-06-10';
+    const VERSION       = '2.0.6';
+    const LAST_MODIFIED = '2022-06-13';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
@@ -346,8 +346,8 @@ class MySQLiBaseModel
     /**
      * Function checkExists
      *
-     * @param string|array $whereValue
-     * @param string       $whereField
+     * @param string|array $wheres
+     * @param string       $fields
      * @param string       $select
      *
      * @return int|null
@@ -355,10 +355,10 @@ class MySQLiBaseModel
      * @copyright: 713uk13m <dev@nguyenanhung.com>
      * @time     : 08/02/2020 33:50
      */
-    public function checkExists($whereValue = '', $whereField = 'id', $select = '*')
+    public function checkExists($wheres = '', $fields = 'id', $select = '*')
     {
         try {
-            $this->queryWhereFieldValue($whereValue, $whereField);
+            $this->queryWhereFieldValue($wheres, $fields);
             $this->db->get($this->table, null, $select);
 
             return (int) $this->db->count;
