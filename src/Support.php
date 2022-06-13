@@ -106,7 +106,11 @@ trait Support
                 }
             }
         } else {
-            $this->db->where($field, $wheres, self::OPERATOR_EQUAL_TO);
+            if (is_array($wheres)) {
+                $this->db->where($field, $wheres, self::OPERATOR_IS_IN);
+            } else {
+                $this->db->where($field, $wheres, self::OPERATOR_EQUAL_TO);
+            }
         }
     }
 
@@ -161,9 +165,10 @@ trait Support
      *
      * @param array|null $options
      *
+     * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/16/2021 10:49
+     * @time     : 13/06/2022 50:04
      */
     protected function queryOrderBy(array $options = null)
     {
@@ -180,10 +185,11 @@ trait Support
      * @param array|null $options
      * @param string     $selectField
      *
-     * @return mixed
+     * @return array|\MysqliDb|object|string
+     * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 09/16/2021 15:31
+     * @time     : 13/06/2022 50:01
      */
     protected function queryGetResultWithLimit(array $options = null, string $selectField = '*')
     {
