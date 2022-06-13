@@ -23,8 +23,8 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '3.0.1';
-    const LAST_MODIFIED = '2022-06-10';
+    const VERSION       = '3.0.2';
+    const LAST_MODIFIED = '2022-06-13';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
@@ -55,22 +55,31 @@ class MySQLiBaseModel
 
     /** @var object Đối tượng khởi tạo dùng gọi đến Class Debug \nguyenanhung\MyDebug\Logger */
     protected $logger;
+
     /** @var array|null Mảng dữ liệu chứa thông tin database cần kết nối tới */
     protected $database;
+
     /** @var string DB Name */
     protected $dbName = 'default';
+
     /** @var string|null Bảng cần lấy dữ liệu */
     protected $table;
+
     /** @var object Database */
     protected $db;
+
     /** @var bool Cấu hình trạng thái Debug, TRUE nếu bật, FALSE nếu tắt */
     public $debugStatus = false;
+
     /** @var null|string Cấu hình Level Debug */
     public $debugLevel = 'error';
+
     /** @var null|bool|string Cấu hình thư mục lưu trữ Log, VD: /your/to/path */
     public $debugLoggerPath = '';
+
     /** @var null|string Cấu hình File Log, VD: Log-2018-10-15.log | Log-date('Y-m-d').log */
     public $debugLoggerFilename = '';
+
     /** @var string Primary Key Default */
     public $primaryKey = 'id';
 
@@ -139,7 +148,7 @@ class MySQLiBaseModel
     public function preparePaging(int $pageIndex = 1, int $pageSize = 10): array
     {
         if ($pageIndex !== 0) {
-            if (!$pageIndex || $pageIndex <= 0 || empty($pageIndex)) {
+            if ($pageIndex <= 0 || empty($pageIndex)) {
                 $pageIndex = 1;
             }
             $offset = ($pageIndex - 1) * $pageSize;
@@ -664,11 +673,9 @@ class MySQLiBaseModel
     {
         try {
             $this->queryOnlyMultipleWhere($wheres);
-
             $this->queryOrderBy($options);
 
-            // $this->logger->debug(__FUNCTION__, 'Format is get all Result => ' . json_encode($result));
-
+            // $this->logger->debug(__FUNCTION__, 'Format is get all Result => ' . json_encode($result));=
             return $this->queryGetResultWithLimit($options, $selectField);
         } catch (Exception $e) {
             return $this->errorException($e, null);
