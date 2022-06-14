@@ -52,19 +52,27 @@ trait Support
     {
         if (is_array($value) && count($value) > 0) {
             foreach ($value as $f => $v) {
-                if (is_array($v)) {
-                    $this->db->where($f, $v, self::OPERATOR_IS_IN);
+                if (isset($v['operator'])) {
+                    $this->db->where($v['field'], $v['value'], $v['operator']);
                 } else {
-                    $this->db->where($f, $v, self::OPERATOR_EQUAL_TO);
+                    if (is_array($v)) {
+                        $this->db->where($f, $v, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($f, $v, self::OPERATOR_EQUAL_TO);
+                    }
                 }
+
             }
         } else {
-            if (is_array($value)) {
-                $this->db->where($field, $value, self::OPERATOR_IS_IN);
+            if (isset($value['operator'])) {
+                $this->db->where($value['field'], $value['value'], $value['operator']);
             } else {
-                $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                if (is_array($value)) {
+                    $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                } else {
+                    $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                }
             }
-
         }
     }
 
@@ -80,11 +88,15 @@ trait Support
     protected function queryOnlyWhereFieldValue($wheres = '')
     {
         if (is_array($wheres) && count($wheres) > 0) {
-            foreach ($wheres as $column => $column_value) {
-                if (is_array($column_value)) {
-                    $this->db->where($column, $column_value, self::OPERATOR_IS_IN);
+            foreach ($wheres as $column => $value) {
+                if (isset($value['operator'])) {
+                    $this->db->where($value['field'], $value['value'], $value['operator']);
                 } else {
-                    $this->db->where($column, $column_value, self::OPERATOR_EQUAL_TO);
+                    if (is_array($value)) {
+                        $this->db->where($column, $value, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($column, $value, self::OPERATOR_EQUAL_TO);
+                    }
                 }
             }
         }
@@ -128,10 +140,14 @@ trait Support
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $field => $value) {
-                if (is_array($value)) {
-                    $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                if (isset($value['operator'])) {
+                    $this->db->where($value['field'], $value['value'], $value['operator']);
                 } else {
-                    $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                    if (is_array($value)) {
+                        $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                    }
                 }
             }
         } else {
