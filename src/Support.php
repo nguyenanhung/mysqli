@@ -52,14 +52,27 @@ trait Support
     {
         if (is_array($value) && count($value) > 0) {
             foreach ($value as $f => $v) {
-                if (is_array($v)) {
-                    $this->db->where($f, $v, self::OPERATOR_IS_IN);
+                if (isset($v['operator'])) {
+                    $this->db->where($v['field'], $v['value'], $v['operator']);
                 } else {
-                    $this->db->where($f, $v, self::OPERATOR_EQUAL_TO);
+                    if (is_array($v)) {
+                        $this->db->where($f, $v, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($f, $v, self::OPERATOR_EQUAL_TO);
+                    }
                 }
+
             }
         } else {
-            $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+            if (isset($value['operator'])) {
+                $this->db->where($value['field'], $value['value'], $value['operator']);
+            } else {
+                if (is_array($value)) {
+                    $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                } else {
+                    $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                }
+            }
         }
     }
 
@@ -75,11 +88,15 @@ trait Support
     protected function queryOnlyWhereFieldValue($wheres = '')
     {
         if (is_array($wheres) && count($wheres) > 0) {
-            foreach ($wheres as $column => $column_value) {
-                if (is_array($column_value)) {
-                    $this->db->where($column, $column_value, self::OPERATOR_IS_IN);
+            foreach ($wheres as $column => $value) {
+                if (isset($value['operator'])) {
+                    $this->db->where($value['field'], $value['value'], $value['operator']);
                 } else {
-                    $this->db->where($column, $column_value, self::OPERATOR_EQUAL_TO);
+                    if (is_array($value)) {
+                        $this->db->where($column, $value, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($column, $value, self::OPERATOR_EQUAL_TO);
+                    }
                 }
             }
         }
@@ -106,11 +123,7 @@ trait Support
                 }
             }
         } else {
-            if (is_array($wheres)) {
-                $this->db->where($field, $wheres, self::OPERATOR_IS_IN);
-            } else {
-                $this->db->where($field, $wheres, self::OPERATOR_EQUAL_TO);
-            }
+            $this->db->where($field, $wheres, self::OPERATOR_EQUAL_TO);
         }
     }
 
@@ -127,10 +140,14 @@ trait Support
     {
         if (is_array($wheres) && count($wheres) > 0) {
             foreach ($wheres as $field => $value) {
-                if (is_array($value)) {
-                    $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                if (isset($value['operator'])) {
+                    $this->db->where($value['field'], $value['value'], $value['operator']);
                 } else {
-                    $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                    if (is_array($value)) {
+                        $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                    }
                 }
             }
         } else {
@@ -168,7 +185,7 @@ trait Support
      * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 13/06/2022 50:04
+     * @time     : 13/06/2022 46:07
      */
     protected function queryOrderBy(array $options = null)
     {
@@ -182,16 +199,16 @@ trait Support
     /**
      * Function queryGetResultWithLimit
      *
-     * @param array|null $options
-     * @param string     $selectField
+     * @param array|null   $options
+     * @param array|string $selectField
      *
      * @return array|\MysqliDb|object|string
      * @throws \Exception
      * @author   : 713uk13m <dev@nguyenanhung.com>
      * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 13/06/2022 50:01
+     * @time     : 13/06/2022 46:13
      */
-    protected function queryGetResultWithLimit(array $options = null, string $selectField = '*')
+    protected function queryGetResultWithLimit(array $options = null, $selectField = '*')
     {
         if (isset($options['limit'], $options['offset']) && $options['limit'] > 0) {
             $page    = $this->preparePaging($options['offset'], $options['limit']);
