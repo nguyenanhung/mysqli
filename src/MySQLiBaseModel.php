@@ -23,8 +23,8 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '3.0.3';
-    const LAST_MODIFIED = '2022-06-14';
+    const VERSION       = '3.0.4';
+    const LAST_MODIFIED = '2022-06-19';
     const AUTHOR_NAME   = 'Hung Nguyen';
     const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
     const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
