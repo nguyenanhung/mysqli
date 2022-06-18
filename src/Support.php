@@ -50,27 +50,29 @@ trait Support
      */
     protected function queryWhereFieldValue($value = '', string $field = 'id')
     {
-        if (is_array($value) && count($value) > 0) {
-            foreach ($value as $f => $v) {
-                if (isset($v['operator'])) {
-                    $this->db->where($v['field'], $v['value'], $v['operator']);
-                } else {
-                    if (is_array($v)) {
-                        $this->db->where($f, $v, self::OPERATOR_IS_IN);
+        if (!empty($value)) {
+            if (is_array($value) && count($value) > 0) {
+                foreach ($value as $f => $v) {
+                    if (isset($v['operator'])) {
+                        $this->db->where($v['field'], $v['value'], $v['operator']);
                     } else {
-                        $this->db->where($f, $v, self::OPERATOR_EQUAL_TO);
+                        if (is_array($v)) {
+                            $this->db->where($f, $v, self::OPERATOR_IS_IN);
+                        } else {
+                            $this->db->where($f, $v, self::OPERATOR_EQUAL_TO);
+                        }
                     }
-                }
 
-            }
-        } else {
-            if (isset($value['operator'])) {
-                $this->db->where($value['field'], $value['value'], $value['operator']);
+                }
             } else {
-                if (is_array($value)) {
-                    $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                if (isset($value['operator'])) {
+                    $this->db->where($value['field'], $value['value'], $value['operator']);
                 } else {
-                    $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                    if (is_array($value)) {
+                        $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                    }
                 }
             }
         }
@@ -87,15 +89,17 @@ trait Support
      */
     protected function queryOnlyWhereFieldValue($wheres = '')
     {
-        if (is_array($wheres) && count($wheres) > 0) {
-            foreach ($wheres as $column => $value) {
-                if (isset($value['operator'])) {
-                    $this->db->where($value['field'], $value['value'], $value['operator']);
-                } else {
-                    if (is_array($value)) {
-                        $this->db->where($column, $value, self::OPERATOR_IS_IN);
+        if (!empty($wheres)) {
+            if (is_array($wheres) && count($wheres) > 0) {
+                foreach ($wheres as $column => $value) {
+                    if (isset($value['operator'])) {
+                        $this->db->where($value['field'], $value['value'], $value['operator']);
                     } else {
-                        $this->db->where($column, $value, self::OPERATOR_EQUAL_TO);
+                        if (is_array($value)) {
+                            $this->db->where($column, $value, self::OPERATOR_IS_IN);
+                        } else {
+                            $this->db->where($column, $value, self::OPERATOR_EQUAL_TO);
+                        }
                     }
                 }
             }
@@ -114,16 +118,18 @@ trait Support
      */
     protected function queryMultipleWhereField($wheres = '', string $field = 'id')
     {
-        if (is_array($wheres) && count($wheres) > 0) {
-            foreach ($wheres as $value) {
-                if (is_array($value['value'])) {
-                    $this->db->where($value['field'], $value['value'], self::OPERATOR_IS_IN);
-                } else {
-                    $this->db->where($value['field'], $value['value'], $value['operator']);
+        if (!empty($wheres)) {
+            if (is_array($wheres) && count($wheres) > 0) {
+                foreach ($wheres as $value) {
+                    if (is_array($value['value'])) {
+                        $this->db->where($value['field'], $value['value'], self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($value['field'], $value['value'], $value['operator']);
+                    }
                 }
+            } else {
+                $this->db->where($field, $wheres, self::OPERATOR_EQUAL_TO);
             }
-        } else {
-            $this->db->where($field, $wheres, self::OPERATOR_EQUAL_TO);
         }
     }
 
@@ -138,20 +144,22 @@ trait Support
      */
     protected function queryMultipleWhere($wheres = '')
     {
-        if (is_array($wheres) && count($wheres) > 0) {
-            foreach ($wheres as $field => $value) {
-                if (isset($value['operator'])) {
-                    $this->db->where($value['field'], $value['value'], $value['operator']);
-                } else {
-                    if (is_array($value)) {
-                        $this->db->where($field, $value, self::OPERATOR_IS_IN);
+        if (!empty($wheres)) {
+            if (is_array($wheres) && count($wheres) > 0) {
+                foreach ($wheres as $field => $value) {
+                    if (isset($value['operator'])) {
+                        $this->db->where($value['field'], $value['value'], $value['operator']);
                     } else {
-                        $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                        if (is_array($value)) {
+                            $this->db->where($field, $value, self::OPERATOR_IS_IN);
+                        } else {
+                            $this->db->where($field, $value, self::OPERATOR_EQUAL_TO);
+                        }
                     }
                 }
+            } else {
+                $this->db->where($this->primaryKey, $wheres, self::OPERATOR_EQUAL_TO);
             }
-        } else {
-            $this->db->where($this->primaryKey, $wheres, self::OPERATOR_EQUAL_TO);
         }
     }
 
@@ -166,12 +174,14 @@ trait Support
      */
     protected function queryOnlyMultipleWhere($wheres = '')
     {
-        if (is_array($wheres) && count($wheres) > 0) {
-            foreach ($wheres as $value) {
-                if (is_array($value['value'])) {
-                    $this->db->where($value['field'], $value['value'], self::OPERATOR_IS_IN);
-                } else {
-                    $this->db->where($value['field'], $value['value'], $value['operator']);
+        if (!empty($wheres)) {
+            if (is_array($wheres) && count($wheres) > 0) {
+                foreach ($wheres as $value) {
+                    if (is_array($value['value'])) {
+                        $this->db->where($value['field'], $value['value'], self::OPERATOR_IS_IN);
+                    } else {
+                        $this->db->where($value['field'], $value['value'], $value['operator']);
+                    }
                 }
             }
         }
