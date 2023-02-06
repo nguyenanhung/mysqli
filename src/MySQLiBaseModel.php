@@ -23,38 +23,40 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION       = '3.0.4';
-    const LAST_MODIFIED = '2022-06-19';
-    const AUTHOR_NAME   = 'Hung Nguyen';
-    const AUTHOR_EMAIL  = 'dev@nguyenanhung.com';
-    const PROJECT_NAME  = 'Database Wrapper - MySQLi Database Model';
-
-    const OPERATOR_EQUAL_TO                 = '=';
-    const OP_EQ                             = '=';
-    const OPERATOR_NOT_EQUAL_TO             = '!=';
-    const OP_NE                             = '!=';
-    const OPERATOR_LESS_THAN                = '<';
-    const OP_LT                             = '<';
-    const OPERATOR_LESS_THAN_OR_EQUAL_TO    = '<=';
-    const OP_LTE                            = '<=';
-    const OPERATOR_GREATER_THAN             = '>';
-    const OP_GT                             = '>';
+    const VERSION = '3.0.5';
+    const LAST_MODIFIED = '2023-02-06';
+    const AUTHOR_NAME = 'Hung Nguyen';
+    const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
+    const PROJECT_NAME = 'Database Wrapper - MySQLi Database Model';
+    const OPERATOR_EQUAL_TO = '=';
+    const OP_EQ = '=';
+    const OPERATOR_NOT_EQUAL_TO = '!=';
+    const OP_NE = '!=';
+    const OPERATOR_LESS_THAN = '<';
+    const OP_LT = '<';
+    const OPERATOR_LESS_THAN_OR_EQUAL_TO = '<=';
+    const OP_LTE = '<=';
+    const OPERATOR_GREATER_THAN = '>';
+    const OP_GT = '>';
     const OPERATOR_GREATER_THAN_OR_EQUAL_TO = '>=';
-    const OP_GTE                            = '>=';
-    const OPERATOR_IS_SPACESHIP             = '<=>';
-    const OPERATOR_IS_IN                    = 'IN';
-    const OPERATOR_IS_LIKE                  = 'LIKE';
-    const OPERATOR_IS_LIKE_BINARY           = 'LIKE BINARY';
-    const OPERATOR_IS_ILIKE                 = 'ilike';
-    const OPERATOR_IS_NOT_LIKE              = 'NOT LIKE';
-    const OPERATOR_IS_NULL                  = 'IS NULL';
-    const OPERATOR_IS_NOT_NULL              = 'IS NOT NULL';
-    const ORDER_ASCENDING                   = 'ASC';
-    const ORDER_DESCENDING                  = 'DESC';
+    const OP_GTE = '>=';
+    const OPERATOR_IS_SPACESHIP = '<=>';
+    const OPERATOR_IS_IN = 'IN';
+    const OPERATOR_IS_LIKE = 'LIKE';
+    const OPERATOR_IS_LIKE_BINARY = 'LIKE BINARY';
+    const OPERATOR_IS_ILIKE = 'ilike';
+    const OPERATOR_IS_NOT_LIKE = 'NOT LIKE';
+    const OPERATOR_IS_NULL = 'IS NULL';
+    const OPERATOR_IS_NOT_NULL = 'IS NOT NULL';
+    const ORDER_ASCENDING = 'ASC';
+    const ORDER_DESCENDING = 'DESC';
 
 
     /** @var object Đối tượng khởi tạo dùng gọi đến Class Debug \nguyenanhung\MyDebug\Logger */
     protected $logger;
+
+    /** @var object Đối tượng khởi tạo dùng gọi đến Class Debug \nguyenanhung\MyDebug\Logger */
+    protected $debug;
 
     /** @var array|null Mảng dữ liệu chứa thông tin database cần kết nối tới */
     protected $database;
@@ -107,6 +109,7 @@ class MySQLiBaseModel
                 $this->logger->setLoggerSubPath(__CLASS__);
                 $this->logger->setLoggerFilename($this->debugLoggerFilename);
             }
+            $this->debug = $this->logger;
         }
         if (isset($this->database) && is_array($this->database) && !empty($this->database)) {
             $this->db = new MysqliDb();
@@ -202,7 +205,7 @@ class MySQLiBaseModel
     public function setDatabase(array $database = array(), string $name = 'default'): MySQLiBaseModel
     {
         $this->database = $database;
-        $this->dbName   = $name;
+        $this->dbName = $name;
 
         return $this;
     }
