@@ -22,7 +22,7 @@
         "php": ">=7.0",
         "ext-json": "*",
         "ext-mysqli": "*",
-        "bear8421/php-mysql-database-class-updated": "dev-master"
+        "bear8421/php-mysql-database-class-updated": "^3.0"
     },
     "require-dev": {
         "nguyenanhung/my-debug": "^3.0 || ^2.0"
