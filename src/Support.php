@@ -221,9 +221,9 @@ trait Support
     protected function queryGetResultWithLimit(array $options = null, $selectField = '*')
     {
         if (isset($options['limit'], $options['offset']) && $options['limit'] > 0) {
-            $page    = $this->preparePaging($options['offset'], $options['limit']);
+            $page = $this->preparePaging($options['offset'], $options['limit']);
             $numRows = array($page['offset'], $options['limit']);
-            $result  = $this->db->get($this->table, $numRows, $selectField);
+            $result = $this->db->get($this->table, $numRows, $selectField);
         } else {
             $result = $this->db->get($this->table, null, $selectField);
         }

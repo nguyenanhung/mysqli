@@ -22,10 +22,10 @@
         "php": ">=7.0",
         "ext-json": "*",
         "ext-mysqli": "*",
-        "joshcam/mysqli-database-class": "^2.9"
+        "bear8421/php-mysql-database-class-updated": "dev-master"
     },
     "require-dev": {
-        "nguyenanhung/my-debug": "^3.0"
+        "nguyenanhung/my-debug": "^3.0 || ^2.0"
     },
     "autoload": {
         "psr-4": {
