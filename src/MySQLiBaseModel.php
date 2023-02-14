@@ -23,7 +23,7 @@ class MySQLiBaseModel
 {
     use Support;
 
-    const VERSION = '2.1.0';
+    const VERSION = '2.1.1';
     const LAST_MODIFIED = '2023-02-14';
     const AUTHOR_NAME = 'Hung Nguyen';
     const AUTHOR_EMAIL = 'dev@nguyenanhung.com';
