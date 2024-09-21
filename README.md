@@ -1,4 +1,9 @@
-[![Latest Stable Version](http://poser.pugx.org/nguyenanhung/mysqli/v)](https://packagist.org/packages/nguyenanhung/mysqli) [![Total Downloads](http://poser.pugx.org/nguyenanhung/mysqli/downloads)](https://packagist.org/packages/nguyenanhung/mysqli) [![Latest Unstable Version](http://poser.pugx.org/nguyenanhung/mysqli/v/unstable)](https://packagist.org/packages/nguyenanhung/mysqli) [![License](http://poser.pugx.org/nguyenanhung/mysqli/license)](https://packagist.org/packages/nguyenanhung/mysqli) [![PHP Version Require](http://poser.pugx.org/nguyenanhung/mysqli/require/php)](https://packagist.org/packages/nguyenanhung/mysqli)
+[![Latest Stable Version](https://img.shields.io/packagist/v/nguyenanhung/mysqli.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/mysqli)
+[![Total Downloads](https://img.shields.io/packagist/dt/nguyenanhung/mysqli.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/mysqli)
+[![Daily Downloads](https://img.shields.io/packagist/dd/nguyenanhung/mysqli.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/mysqli)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/nguyenanhung/mysqli.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/mysqli)
+[![License](https://img.shields.io/packagist/l/nguyenanhung/mysqli.svg?style=flat-square)](https://packagist.org/packages/nguyenanhung/mysqli)
+[![PHP Version Require](https://img.shields.io/packagist/dependency-v/nguyenanhung/mysqli/php)](https://packagist.org/packages/nguyenanhung/mysqli)
 
 # MySQLi
 
